@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>org.redisson</groupId>
 			<artifactId>redisson</artifactId>
-			<version>2.9.0</version>
+			<version>3.11.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>

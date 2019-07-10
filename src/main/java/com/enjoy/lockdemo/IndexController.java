@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -18,6 +19,12 @@ public class IndexController {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
+    @PostConstruct
+    public void init(){
+        stringRedisTemplate.opsForValue().set("stock_product_001","10");
+        System.out.println("初始化完毕");
+    }
 
     @RequestMapping("deduct_stock")
     public String deductStock(){
@@ -81,7 +88,7 @@ public class IndexController {
         try{
             lock.tryLock(30,TimeUnit.SECONDS);
 
-            int stock = Integer.parseInt(stringRedisTemplate.opsForValue().get("stock"));
+            int stock = Integer.parseInt(stringRedisTemplate.opsForValue().get("stock_product_001"));
             if(stock > 0){
                 int realStock = stock - 1;
                 stringRedisTemplate.opsForValue().set("stock",realStock + "") ;
